@@ -1,26 +1,43 @@
-import useQuiz from "../hooks/useQuiz";
-import { QuizCard } from "./Quiz/QuizCard";
+import { useContext } from "react";
+import { QuizCard } from "./QuizCard";
+import { QuizContext } from "../context/QuizContext";
+import { ConstructionTypesStep, EffectsStep } from "./Steps";
 
 export const Quiz = () => {
-  const { constructionTypes, effects } = useQuiz();
-  
+  const {
+    constructionTypes,
+    effects,
+
+    currentStep,
+    dataQuiz,
+    isFirstStep,
+    isLastStep,
+    isSubmitted,
+    steps,
+
+    goToNextStep,
+    goToPrevStep,
+    updateQuizDate,
+    submitQuiz,
+    resetQuiz,
+  } = useContext(QuizContext);
+
+  const onNext = (data) => {};
+
   return (
     <>
-      <ul>
-        <h1>constructionTypes</h1>
+      {currentStep === 0 && <ConstructionTypesStep />}
 
-        {constructionTypes.map((constructionType) => (
-          <QuizCard key={constructionType.id} {...constructionType} />
-        ))}
-      </ul>
+      {currentStep === 1 && <EffectsStep />}
 
-      <ul>
-        <h1>effects</h1>
-
-        {effects.map((effect) => (
-          <QuizCard key={effect.id} {...effect} />
-        ))}
-      </ul>
+      <div>
+        <button type="button" onClick={goToPrevStep} disabled={isFirstStep}>
+          PREV
+        </button>
+        <button type="button" onClick={goToNextStep}>
+          {isLastStep ? "SUBMIT" : "NEXT"}
+        </button>
+      </div>
     </>
   );
 };
