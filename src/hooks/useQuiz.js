@@ -7,6 +7,10 @@ const useQuiz = () => {
   const [constructionTypes, setConstructionTypes] = useState([]);
   const [effects, setEffects] = useState([]);
 
+  const [selected, setSelected] = useState([]);
+
+  console.log(constructionTypes);
+
   useEffect(() => {
     quizAPI.getConstructionTypesAll().then(setConstructionTypes);
     quizAPI.getEffectsAll().then(setEffects);
@@ -75,6 +79,10 @@ const useQuiz = () => {
     submitQuiz,
     resetQuiz,
     toggleTaskComplete,
+
+    selected,
+    setSelected,
+    setEffects,
   };
 };
 

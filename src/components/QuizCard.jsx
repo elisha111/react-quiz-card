@@ -1,17 +1,12 @@
 export const QuizCard = (props) => {
-  const { id, name, img } = props;
+  const { id, name, img, onClick } = props;
 
   return (
-    <li className="quiz-item">
-      <input 
-        className="quiz-item__checkbox" 
-        id={id} 
-        type="checkbox"
-      />
-      <label className="quiz-item__label" htmlFor={id}>
-        <img src={img} alt="" width={50} height={50} />
+    <li className="quiz-item" id={id} onClick={onClick}>
+      <img src={img} alt="" width={50} height={50} />
+      <div>
         {name}
-      </label>
+      </div>
     </li>
   );
 };

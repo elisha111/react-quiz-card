@@ -22,6 +22,10 @@ export const QuizProvider = (props) => {
     updateQuizDate,
     submitQuiz,
     resetQuiz,
+
+    selected,
+    setSelected,
+    setEffects,
   } = useQuiz();
 
   return (
@@ -42,6 +46,10 @@ export const QuizProvider = (props) => {
         updateQuizDate,
         submitQuiz,
         resetQuiz,
+
+        selected,
+        setSelected,
+        setEffects,
       }}
     >
       {children}
