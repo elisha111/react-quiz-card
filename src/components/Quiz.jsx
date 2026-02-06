@@ -16,6 +16,8 @@ export const Quiz = () => {
     handleEffectClick,
 
     resetQuiz,
+
+    selectedItems,
   } = useQuiz();
 
   return (
@@ -42,13 +44,26 @@ export const Quiz = () => {
         )}
       </div>
 
-      <div>
+      <div className="mb-6">
         <button type="button" onClick={goToPrevStep} disabled={isFirstStep}>
           PREV
         </button>
         <button type="button" onClick={goToNextStep}>
           {isLastStep ? "SUBMIT" : "NEXT"}
         </button>
+      </div>
+
+      <div>
+        {selectedItems.length > 0 ? (
+          <p className="mb-4">
+            Выбрано(all):{" "}
+            <span className="font-medium">
+              {selectedItems.map((item) => item.name).join(", ")}
+            </span>
+          </p>
+        ) : (
+          <p>Ничего не выбрано</p>
+        )}
       </div>
     </>
   );

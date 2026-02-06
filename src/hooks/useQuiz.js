@@ -85,22 +85,30 @@ const useQuiz = () => {
   );
 
   // проверка
-  const selectedConstructionTypes = useMemo(
-    () => constructionTypes.filter((item) => item.selected),
-    [constructionTypes]
-  );
-  const selectedEffects = useMemo(
-    () => effects.filter((item) => item.selected),
-    [effects]
-  );
+  // const selectedConstructionTypes = useMemo(
+  //   () => constructionTypes.filter((item) => item.selected),
+  //   [constructionTypes]
+  // );
+  // const selectedEffects = useMemo(
+  //   () => effects.filter((item) => item.selected),
+  //   [effects]
+  // );
 
-  useEffect(() => {
-    console.log("constructionType.selected", selectedConstructionTypes);
-  }, [selectedConstructionTypes]);
+  // useEffect(() => {
+  //   console.log("constructionType.selected", selectedConstructionTypes);
+  // }, [selectedConstructionTypes]);
 
-  useEffect(() => {
-    console.log("effect.selected", selectedEffects);
-  }, [selectedEffects]);
+  // useEffect(() => {
+  //   console.log("effect.selected", selectedEffects);
+  // }, [selectedEffects]);
+
+  const selectedItems = useMemo(
+    () => [
+      ...constructionTypes.filter((item) => item.selected),
+      ...effects.filter((item) => item.selected),
+    ],
+    [constructionTypes, effects]
+  );
 
   // end проверка
 
@@ -118,6 +126,8 @@ const useQuiz = () => {
     handleEffectClick,
 
     resetQuiz,
+
+    selectedItems,
   };
 };
 
