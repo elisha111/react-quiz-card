@@ -26,6 +26,8 @@ export const QuizProvider = (props) => {
     selected,
     setSelected,
     setEffects,
+    handleEffectClick,
+    handleConstructionTypeClick,
   } = useQuiz();
 
   return (
@@ -50,6 +52,8 @@ export const QuizProvider = (props) => {
         selected,
         setSelected,
         setEffects,
+        handleEffectClick,
+        handleConstructionTypeClick,
       }}
     >
       {children}

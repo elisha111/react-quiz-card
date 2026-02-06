@@ -1,20 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
 import quizAPI from "../api/quizAPI";
+import useTasksLocalStorage from "./useTasksLocalStorage";
 
-export const steps = ["questions_1", "questions_2"];
+export const steps = ["questions_1", "questions_2", "submitted"];
 
 const useQuiz = () => {
-  const [constructionTypes, setConstructionTypes] = useState([]);
-  const [effects, setEffects] = useState([]);
+  const {
+    savedEffects,
+    saveEffects,
+    savedConstructionTypes,
+    saveConstructionTypes,
+    clearStorage,
+  } = useTasksLocalStorage();
 
-  const [selected, setSelected] = useState([]);
+  const [constructionTypes, setConstructionTypes] = useState(
+    savedConstructionTypes ?? []
+  );
+  const [effects, setEffects] = useState(savedEffects ?? []);
 
-  console.log(constructionTypes);
+  // const [selected, setSelected] = useState([]);
+
+  // console.log(constructionTypes);
 
   useEffect(() => {
-    quizAPI.getConstructionTypesAll().then(setConstructionTypes);
-    quizAPI.getEffectsAll().then(setEffects);
-  }, []);
+    if (!savedConstructionTypes || savedConstructionTypes.length === 0) {
+      quizAPI.getConstructionTypesAll().then(setConstructionTypes);
+    }
+
+    // quizAPI.getEffectsAll().then(setEffects);
+    if (!savedEffects || savedEffects.length === 0) {
+      quizAPI.getEffectsAll().then(setEffects);
+    }
+  }, [savedEffects, savedConstructionTypes]);
+
+  useEffect(() => {
+    if (effects.length > 0) {
+      saveEffects(effects);
+    }
+    if (constructionTypes.length > 0) {
+      saveConstructionTypes(constructionTypes);
+    }
+  }, [saveEffects, effects, saveConstructionTypes, constructionTypes]);
 
   // ---
   const [currentStep, setCurrentStep] = useState(0);
@@ -42,9 +68,10 @@ const useQuiz = () => {
   };
 
   const resetQuiz = () => {
-    setDataQuiz({});
-    setCurrentStep(0);
-    setIsSubmitted(false);
+    // setDataQuiz({});
+    // setCurrentStep(0);
+    // setIsSubmitted(false);
+    clearStorage();
   };
 
   const toggleTaskComplete = useCallback(
@@ -56,11 +83,35 @@ const useQuiz = () => {
           }
 
           return task;
-        }),
+        })
       );
     },
-    [dataQuiz],
+    [dataQuiz]
   );
+
+  const handleEffectClick = (itemId, isSelected) => {
+    setEffects(
+      effects.map((item) => {
+        if (item.id === itemId) {
+          return { ...item, selected: !isSelected };
+        }
+
+        return item;
+      })
+    );
+  };
+
+  const handleConstructionTypeClick = (itemId, isSelected) => {
+    setConstructionTypes(
+      constructionTypes.map((item) => {
+        if (item.id === itemId) {
+          return { ...item, selected: !isSelected };
+        }
+
+        return item;
+      })
+    );
+  };
 
   return {
     constructionTypes,
@@ -80,9 +131,11 @@ const useQuiz = () => {
     resetQuiz,
     toggleTaskComplete,
 
-    selected,
-    setSelected,
+    // selected,
+    // setSelected,
     setEffects,
+    handleEffectClick,
+    handleConstructionTypeClick,
   };
 };
 

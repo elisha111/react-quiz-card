@@ -24,11 +24,23 @@ export const Quiz = () => {
 
   const onNext = (data) => {};
 
+  const resetQuizSelected = () => {
+    // TODO: qwe
+  };
+
   return (
     <>
-      {currentStep === 0 && <ConstructionTypesStep />}
+      <div className="w-3xl">
+        {currentStep === 0 && <ConstructionTypesStep />}
 
-      {currentStep === 1 && <EffectsStep />}
+        {currentStep === 1 && <EffectsStep />}
+
+        {currentStep === 2 && (
+          <button className="mb-16" type="button" onClick={resetQuiz}>
+            submitted
+          </button>
+        )}
+      </div>
 
       <div>
         <button type="button" onClick={goToPrevStep} disabled={isFirstStep}>
