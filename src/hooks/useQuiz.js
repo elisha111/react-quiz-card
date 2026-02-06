@@ -29,9 +29,12 @@ const useQuiz = () => {
   }, [savedEffects, savedConstructionTypes]);
 
   useEffect(() => {
-    saveEffects(effects);
-    saveConstructionTypes(constructionTypes);
-  }, [saveEffects, effects, saveConstructionTypes, constructionTypes]);
+    if (effects.length > 0) saveEffects(effects);
+  }, [saveEffects, effects]);
+
+  useEffect(() => {
+    if (constructionTypes.length > 0) saveConstructionTypes(constructionTypes);
+  }, [saveConstructionTypes, constructionTypes]);
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -93,8 +96,12 @@ const useQuiz = () => {
 
   useEffect(() => {
     console.log("constructionType.selected", selectedConstructionTypes);
+  }, [selectedConstructionTypes]);
+
+  useEffect(() => {
     console.log("effect.selected", selectedEffects);
-  }, [selectedConstructionTypes, selectedEffects]);
+  }, [selectedEffects]);
+
   // end проверка
 
   return {
