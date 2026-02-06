@@ -1,42 +1,42 @@
-import { useContext } from "react";
-import { QuizCard } from "./QuizCard";
-import { QuizContext } from "../context/QuizContext";
 import { ConstructionTypesStep, EffectsStep } from "./Steps";
+import useQuiz from "../hooks/useQuiz";
 
 export const Quiz = () => {
   const {
-    constructionTypes,
-    effects,
-
     currentStep,
-    dataQuiz,
     isFirstStep,
     isLastStep,
-    isSubmitted,
-    steps,
-
-    goToNextStep,
     goToPrevStep,
-    updateQuizDate,
-    submitQuiz,
+    goToNextStep,
+
+    constructionTypes,
+    handleConstructionTypeClick,
+
+    effects,
+    handleEffectClick,
+
     resetQuiz,
-  } = useContext(QuizContext);
-
-  const onNext = (data) => {};
-
-  const resetQuizSelected = () => {
-    // TODO: qwe
-  };
+  } = useQuiz();
 
   return (
     <>
-      <div className="w-3xl">
-        {currentStep === 0 && <ConstructionTypesStep />}
+      <div className="w-3xl bg-gray-100 p-6 rounded-xl mb-6">
+        {currentStep === 0 && (
+          <ConstructionTypesStep
+            constructionTypes={constructionTypes}
+            handleConstructionTypeClick={handleConstructionTypeClick}
+          />
+        )}
 
-        {currentStep === 1 && <EffectsStep />}
+        {currentStep === 1 && (
+          <EffectsStep
+            effects={effects}
+            handleEffectClick={handleEffectClick}
+          />
+        )}
 
         {currentStep === 2 && (
-          <button className="mb-16" type="button" onClick={resetQuiz}>
+          <button type="button" onClick={resetQuiz}>
             submitted
           </button>
         )}
